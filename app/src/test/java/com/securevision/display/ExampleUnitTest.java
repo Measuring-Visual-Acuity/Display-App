@@ -1,4 +1,4 @@
-package com.example.graphviewdemo;
+package com.securevision.display;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.graphviewdemo;
+package com.securevision.display;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.mva.display.R;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -115,4 +116,83 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    class Thread2 implements Runnable
+    {
+        @Override
+        public void run() {
+            while (true)
+            {
+                try
+                {
+                    //output.write("a");
+                    //output.flush();
+                    //final String message = input.readLine();
+                    final String message = dis.readUTF();
+                    Log.i("mainMessage",message);
+                    final String[] mess = message.split("random6",0);
+                    final String url = mess[0];
+                    Log.i("num1", mess[1]);
+                    final double size = Double.parseDouble(mess[1]);
+                    Log.i("receivedMessage",message);
+                    //Toast.makeText(MainActivity.this, message.toString(), Toast.LENGTH_SHORT)
+                    // .show();
+                    /*try {
+                        JSONObject jsonObject = new JSONObject(message);
+                        int random1 = jsonObject.getInt("random1");
+                        Log.d("random1", String.valueOf(random1));
+                    }
+                    catch (JSONException ks)
+                    {
+                        Log.d("jsonExpect", ks.toString());
+                    }*/
+                    if(message != null)
+                    {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Picasso.get().load(message).into(imageView);
+//                                //Log.d("socketMessage", message.toString());
+//                                //Toast.makeText(MainActivity.this, message.toString(),
+//                                        //Toast.LENGTH_SHORT).show();
+//                                //addEntry(Integer.parseInt(message));
+//                            }
+//                        });
+                        try {
+                            /*URL url = new URL(message);
+                            Bitmap bitmap =
+                                    BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                            imageView.setImageBitmap(bitmap);*/
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    double sizxepx = (widthInPixels * size)/widthInInches;
+                                    Log.i("sizeOfImage", String.valueOf(sizxepx));
+                                    Glide.with(MainActivity.this).load(url).override((int)sizxepx
+                                            , (int)sizxepx).into(imageView);
+
+                                }
+                            });
+
+                        }
+                        catch (Exception ex)
+                        {
+                            ex.printStackTrace();
+                        }
+
+                        //Picasso.get().load(message).resize(300,300).into(imageView);
+                    }
+                    else
+                    {
+                        thread1 = new Thread(new Thread1());
+                        thread1.start();
+                        return;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }
