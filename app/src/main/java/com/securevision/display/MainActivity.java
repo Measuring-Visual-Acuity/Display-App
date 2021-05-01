@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.mva.display.R;
+
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
